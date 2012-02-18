@@ -6,7 +6,7 @@ DESCRIPTION
     for use by the Term::TermKey distribution. It is not intended to be used
     directly.
 
-    This module bundles libtermkey version 0.12.
+    This module bundles libtermkey version @MODVERSION@.
 
 METHODS
     This module behaves like ExtUtils::PkgConfig, responding to the same

@@ -1,4 +1,9 @@
 Revision history for Alien-libtermkey
 
+0.02    CHANGES
+         * ExtUtils::PkgConfig is a confiure-time requirement
+         * Build into blib/ then use M::B install
+         * Render wrapped module version into generated .pm file
+
 0.01    First version, released on an unsuspecting world.
 

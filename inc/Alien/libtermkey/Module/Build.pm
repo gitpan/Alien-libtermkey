@@ -55,45 +55,55 @@ sub ACTION_code
 {
    my $self = shift;
 
-   $self->depends_on( 'src' );
+   my $blib = File::Spec->catdir( $self->base_dir, "blib" );
 
-   $self->in_srcdir( sub {
-      system( "make" ) == 0 or
-         die "Unable to make - $!";
-   } );
-}
-
-sub ACTION_install
-{
-   my $self = shift;
-
-   $self->depends_on( 'code' );
-
-   my $libdir = $self->install_destination( "arch" );
+   my $libdir = File::Spec->catdir( $blib, "arch" );
    my $incdir = File::Spec->catdir( $libdir, "include" );
-   my $man3dir = $self->install_destination( "libdoc" );
-   my $man7dir = $self->install_destination( "libdoc" );
+   my $mandir = File::Spec->catdir( $blib, "libdoc" );
 
-   $self->in_srcdir( sub {
-      system( "make", "install", "LIBDIR=$libdir", "INCDIR=$incdir", "MAN3DIR=$man3dir", "MAN7DIR=$man7dir" ) == 0 or
-         die "Unable to make install - $!";
-   } );
+   # TODO: Find a better condition than this. Also this sucks because this
+   # line alone is libtermkey-specific :(
+   unless( -f "$libdir/libtermkey.so" ) {
+      $self->depends_on( 'src' );
 
-   my %replace = (
-      LIBDIR           => $libdir,
-      PKGCONFIG_MODULE => $self->pkgconfig_module,
-   );
+      $self->in_srcdir( sub {
+         system( "make" ) == 0 or
+            die "Unable to make - $!";
+      } );
 
-   # Turn ' into \' in replacements
-   s/'/\\'/g for values %replace;
+      $self->in_srcdir( sub {
+         system( "make", "install", "LIBDIR=$libdir", "INCDIR=$incdir", "MAN3DIR=$mandir", "MAN7DIR=$mandir" ) == 0 or
+            die "Unable to make install - $!";
+      } );
+   }
 
    my @module_file = split m/::/, $self->module_name . ".pm";
+   my $srcfile = File::Spec->catfile( $self->base_dir, "lib", @module_file );
+   my $dstfile = File::Spec->catfile( $blib, "lib", @module_file );
 
-   $self->cp_file_with_replacement(
-      srcfile => File::Spec->catfile( $self->base_dir, "lib", @module_file ),
-      dstfile => File::Spec->catfile( $self->install_destination( "lib" ), @module_file ),
-      replace => \%replace,
-   );
+   unless( $self->up_to_date( $srcfile, $dstfile ) ) {
+      my $real_libdir = $self->install_destination( "arch" );
+
+      local $ENV{PKG_CONFIG_PATH} = "$libdir/pkgconfig";
+      require ExtUtils::PkgConfig;
+
+      my $pkgconfig_module = $self->pkgconfig_module;
+
+      my %replace = (
+         LIBDIR           => $libdir,
+         MODVERSION       => ExtUtils::PkgConfig->modversion( "$pkgconfig_module" ),
+         PKGCONFIG_MODULE => $pkgconfig_module,
+      );
+
+      # Turn ' into \' in replacements
+      s/'/\\'/g for values %replace;
+
+      $self->cp_file_with_replacement(
+         srcfile => $srcfile,
+         dstfile => $dstfile,
+         replace => \%replace,
+      );
+   }
 }
 
 sub cp_file_with_replacement
@@ -109,8 +119,6 @@ sub cp_file_with_replacement
 
    open( my $inh,  "<", $srcfile ) or die "Cannot read $srcfile - $!";
    open( my $outh, ">", $dstfile ) or die "Cannot write $dstfile - $!";
-
-   print "Installing $srcfile as $dstfile\n";
 
    while( my $line = <$inh> ) {
       $line =~ s/\@$_\@/$replace->{$_}/g for keys %$replace;
@@ -128,6 +136,8 @@ sub ACTION_clean
             die "Unable to make clean - $!";
       } );
    }
+
+   $self->SUPER::ACTION_clean;
 }
 
 sub ACTION_realclean

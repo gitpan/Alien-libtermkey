@@ -10,6 +10,7 @@ my $build = Alien::libtermkey::Module::Build->new(
    pkgconfig_module => "termkey",
 
    configure_requires => {
+      'ExtUtils::PkgConfig' => 0,
       'Module::Build' => 0,
    },
    requires => {

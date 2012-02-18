@@ -16,6 +16,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
+            "ExtUtils::PkgConfig" : 0,
             "Module::Build" : 0
          }
       },
@@ -31,7 +32,7 @@
    "provides" : {
       "Alien::libtermkey" : {
          "file" : "lib/Alien/libtermkey.pm",
-         "version" : "0.01"
+         "version" : "0.02"
       }
    },
    "release_status" : "stable",
@@ -40,5 +41,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.01"
+   "version" : "0.02"
 }
