@@ -16,7 +16,7 @@ name: Alien-libtermkey
 provides:
   Alien::libtermkey:
     file: lib/Alien/libtermkey.pm
-    version: 0.02
+    version: 0.03
 requires:
   ExtUtils::PkgConfig: 0
   File::Basename: 0
@@ -24,4 +24,4 @@ requires:
   File::Spec: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.02
+version: 0.03

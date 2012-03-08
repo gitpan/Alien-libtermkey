@@ -84,14 +84,10 @@ sub ACTION_code
    unless( $self->up_to_date( $srcfile, $dstfile ) ) {
       my $real_libdir = $self->install_destination( "arch" );
 
-      local $ENV{PKG_CONFIG_PATH} = "$libdir/pkgconfig";
-      require ExtUtils::PkgConfig;
-
       my $pkgconfig_module = $self->pkgconfig_module;
 
       my %replace = (
          LIBDIR           => $libdir,
-         MODVERSION       => ExtUtils::PkgConfig->modversion( "$pkgconfig_module" ),
          PKGCONFIG_MODULE => $pkgconfig_module,
       );
 
