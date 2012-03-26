@@ -122,6 +122,18 @@ sub cp_file_with_replacement
    }
 }
 
+sub ACTION_test
+{
+   my $self = shift;
+
+   $self->depends_on( "code" );
+
+   $self->in_srcdir( sub {
+      system( "make", "test" ) == 0 or
+         die "Unable to make test - $!";
+   } );
+}
+
 sub ACTION_clean
 {
    my $self = shift;
