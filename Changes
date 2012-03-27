@@ -1,5 +1,13 @@
 Revision history for Alien-libtermkey
 
+0.05    CHANGES:
+         * File::Path::make_path needs File::Path 2.07
+         * GNU make is called 'gmake' on most non-Linux platforms
+
+0.04    CHANGES:
+         * Wrap libtermkey 0.14
+         * Run bundled libtermkey unit tests at ./Build test time
+
 0.03    CHANGES:
          * Wrap libtermkey 0.13
          * Don't render wrapped module version into generated .pm file as it

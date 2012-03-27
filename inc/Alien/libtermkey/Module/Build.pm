@@ -8,9 +8,12 @@ use base qw( Module::Build );
 use ExtUtils::PkgConfig;
 use File::Basename qw( dirname );
 use File::Spec;
-use File::Path qw( make_path );
+use File::Path 2.07 qw( make_path );
 
 use constant SRCDIR => "src";
+
+# GNU make is called 'gmake' on most non-Linux platforms
+use constant MAKE => ( $^O eq "linux" ) ? "make" : "gmake";
 
 __PACKAGE__->add_property( 'tarball' );
 __PACKAGE__->add_property( 'pkgconfig_module' );
@@ -67,12 +70,12 @@ sub ACTION_code
       $self->depends_on( 'src' );
 
       $self->in_srcdir( sub {
-         system( "make" ) == 0 or
+         system( MAKE ) == 0 or
             die "Unable to make - $!";
       } );
 
       $self->in_srcdir( sub {
-         system( "make", "install", "LIBDIR=$libdir", "INCDIR=$incdir", "MAN3DIR=$mandir", "MAN7DIR=$mandir" ) == 0 or
+         system( MAKE, "install", "LIBDIR=$libdir", "INCDIR=$incdir", "MAN3DIR=$mandir", "MAN7DIR=$mandir" ) == 0 or
             die "Unable to make install - $!";
       } );
    }
@@ -129,7 +132,7 @@ sub ACTION_test
    $self->depends_on( "code" );
 
    $self->in_srcdir( sub {
-      system( "make", "test" ) == 0 or
+      system( MAKE, "test" ) == 0 or
          die "Unable to make test - $!";
    } );
 }
@@ -140,7 +143,7 @@ sub ACTION_clean
 
    if( -d $self->_srcdir ) {
       $self->in_srcdir( sub {
-         system( "make", "clean" ) == 0 or
+         system( MAKE, "clean" ) == 0 or
             die "Unable to make clean - $!";
       } );
    }
