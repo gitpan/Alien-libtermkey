@@ -5,7 +5,7 @@
 
 package Alien::libtermkey;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use ExtUtils::PkgConfig;
 my $libdir = '@LIBDIR@';

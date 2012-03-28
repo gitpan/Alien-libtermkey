@@ -1,5 +1,8 @@
 Revision history for Alien-libtermkey
 
+0.06    BUGFIXES:
+         * Pack the /correct/ libtermkey distribution tarball
+
 0.05    CHANGES:
          * File::Path::make_path needs File::Path 2.07
          * GNU make is called 'gmake' on most non-Linux platforms
