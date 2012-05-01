@@ -6,7 +6,8 @@ DESCRIPTION
     for use by the Term::TermKey distribution. It is not intended to be used
     directly.
 
-    This module bundles libtermkey version 0.14.
+    This module bundles libtermkey version 0.15a (including the cursor
+    position bugfix).
 
 METHODS
     This module behaves like ExtUtils::PkgConfig, responding to the same

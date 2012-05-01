@@ -12,8 +12,10 @@ use File::Path 2.07 qw( make_path );
 
 use constant SRCDIR => "src";
 
-# GNU make is called 'gmake' on most non-Linux platforms
-use constant MAKE => ( $^O eq "linux" ) ? "make" : "gmake";
+# GNU make is called 'gmake' on most non-Linux platforms, gnumake on Dariwn
+use constant MAKE => ( $^O eq "linux" )  ? "make" :
+                     ( $^O eq "darwin" ) ? "gnumake" :
+                                           "gmake";
 
 __PACKAGE__->add_property( 'tarball' );
 __PACKAGE__->add_property( 'pkgconfig_module' );
@@ -22,6 +24,14 @@ sub _srcdir
 {
    my $self = shift;
    return File::Spec->catdir( $self->base_dir, SRCDIR );
+}
+
+sub _stampfile
+{
+   my $self = shift;
+   my ( $name ) = @_;
+
+   return File::Spec->catfile( $self->base_dir, ".$name-stamp" );
 }
 
 sub in_srcdir
@@ -64,9 +74,9 @@ sub ACTION_code
    my $incdir = File::Spec->catdir( $libdir, "include" );
    my $mandir = File::Spec->catdir( $blib, "libdoc" );
 
-   # TODO: Find a better condition than this. Also this sucks because this
-   # line alone is libtermkey-specific :(
-   unless( -f "$libdir/libtermkey.so" ) {
+   my $buildstamp = $self->_stampfile( "build" );
+
+   unless( -f $buildstamp ) {
       $self->depends_on( 'src' );
 
       $self->in_srcdir( sub {
@@ -78,6 +88,8 @@ sub ACTION_code
          system( MAKE, "install", "LIBDIR=$libdir", "INCDIR=$incdir", "MAN3DIR=$mandir", "MAN7DIR=$mandir" ) == 0 or
             die "Unable to make install - $!";
       } );
+
+      open( my $stamp, ">", $buildstamp ) or die "Unable to touch .build-stamp file - $!";
    }
 
    my @module_file = split m/::/, $self->module_name . ".pm";
@@ -147,6 +159,8 @@ sub ACTION_clean
             die "Unable to make clean - $!";
       } );
    }
+
+   unlink( $self->_stampfile( "build" ) );
 
    $self->SUPER::ACTION_clean;
 }

@@ -1,5 +1,8 @@
 Revision history for Alien-libtermkey
 
+0.07    CHANGES:
+         * Wrap libtermkey 0.15a
+
 0.06    BUGFIXES:
          * Pack the /correct/ libtermkey distribution tarball
 

@@ -5,7 +5,7 @@
 
 package Alien::libtermkey;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use ExtUtils::PkgConfig;
 my $libdir = '@LIBDIR@';
@@ -21,7 +21,8 @@ This CPAN distribution installs a local copy of F<libtermkey>, primarily for
 use by the L<Term::TermKey> distribution. It is not intended to be used
 directly.
 
-This module bundles F<libtermkey> version 0.14.
+This module bundles F<libtermkey> version 0.15a (including the cursor position
+bugfix).
 
 =head1 METHODS
 
