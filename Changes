@@ -1,5 +1,11 @@
 Revision history for Alien-libtermkey
 
+0.08    CHANGES:
+         * Wrap libtermkey 0.15b
+
+        BUGFIXES:
+         * Declare configure_requires correctly
+
 0.07    CHANGES:
          * Wrap libtermkey 0.15a
 

@@ -2,22 +2,28 @@ use strict;
 use warnings;
 
 use lib 'inc';
-use Alien::libtermkey::Module::Build;
+use Alien::make::Module::Build;
 
-my $build = Alien::libtermkey::Module::Build->new(
+my $build = Alien::make::Module::Build->new(
    module_name => 'Alien::libtermkey',
-   tarball => 'libtermkey-0.15a.tar.gz',
+   tarball => 'libtermkey-0.15b.tar.gz',
    pkgconfig_module => "termkey",
 
    configure_requires => {
       'ExtUtils::PkgConfig' => 0,
+      'File::Basename' => 0,
+      'File::Path' => '2.07',
+      'File::Spec' => 0,
       'Module::Build' => 0,
    },
-   requires => {
+   build_requires => {
       'ExtUtils::PkgConfig' => 0,
       'File::Basename' => 0,
       'File::Path' => '2.07',
       'File::Spec' => 0,
+   },
+   requires => {
+      'ExtUtils::PkgConfig' => 0,
    },
    license => 'perl',
    create_makefile_pl => 'small',
