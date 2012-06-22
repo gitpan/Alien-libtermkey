@@ -1,5 +1,15 @@
 Revision history for Alien-libtermkey
 
+0.10    BUGFIXES:
+         * Don't hardcode libdir into .pm file, discover it by @INC search
+         * Rewrite file paths in .pc file relative to libdir - should allow
+           for relocatable installs that work both from blib/ and real
+           installation location
+
+0.09    BUGFIXES:
+         * Bake real installation libdir into build .pm file rather than
+           build-time blib/ dir
+
 0.08    CHANGES:
          * Wrap libtermkey 0.15b
 
