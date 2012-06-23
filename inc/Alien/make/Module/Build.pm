@@ -5,7 +5,6 @@ use warnings;
 
 use base qw( Module::Build );
 
-use ExtUtils::PkgConfig;
 use File::Basename qw( dirname );
 use File::Spec;
 use File::Path 2.07 qw( make_path );

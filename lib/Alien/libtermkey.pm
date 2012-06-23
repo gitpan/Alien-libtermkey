@@ -5,7 +5,7 @@
 
 package Alien::libtermkey;
 
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 # libdir is the first @INC path that contains a pkgconfig/ dir
 my $libdir;
