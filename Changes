@@ -1,5 +1,13 @@
 Revision history for Alien-libtermkey
 
+0.12    BUGFIXES:
+         * Fixes for cygwin:
+            + GNU make is just called "make"
+            + Close written .pc file before trying to rename() it
+
+0.11    BUGFIXES:
+         * Removed dead 'use ExtUtils::PkgConfig' line
+
 0.10    BUGFIXES:
          * Don't hardcode libdir into .pm file, discover it by @INC search
          * Rewrite file paths in .pc file relative to libdir - should allow
