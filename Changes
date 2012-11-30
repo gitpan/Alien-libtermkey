@@ -1,5 +1,8 @@
 Revision history for Alien-libtermkey
 
+0.13    CHANGES:
+         * Wrap libtermkey 0.16
+
 0.12    BUGFIXES:
          * Fixes for cygwin:
             + GNU make is just called "make"

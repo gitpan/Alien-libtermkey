@@ -5,7 +5,7 @@
 
 package Alien::libtermkey;
 
-our $VERSION = '0.12';
+our $VERSION = '0.13';
 
 # libdir is the first @INC path that contains a pkgconfig/ dir
 my $libdir;
@@ -26,8 +26,7 @@ This CPAN distribution installs a local copy of F<libtermkey>, primarily for
 use by the L<Term::TermKey> distribution. It is not intended to be used
 directly.
 
-This module bundles F<libtermkey> version 0.15a (including the cursor position
-bugfix).
+This module bundles F<libtermkey> version 0.16.
 
 =head1 METHODS
 

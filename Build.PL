@@ -6,7 +6,7 @@ use Alien::make::Module::Build;
 
 my $build = Alien::make::Module::Build->new(
    module_name => 'Alien::libtermkey',
-   tarball => 'libtermkey-0.15b.tar.gz',
+   tarball => 'libtermkey-0.16.tar.gz',
    pkgconfig_module => "termkey",
 
    configure_requires => {
