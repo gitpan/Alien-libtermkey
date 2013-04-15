@@ -1,5 +1,9 @@
 Revision history for Alien-libtermkey
 
+0.14    CHANGES:
+         * A better implementation of the three 'check' style veersion testing
+           ExtUtils::PkgConfig methods
+
 0.13    CHANGES:
          * Wrap libtermkey 0.16
 
